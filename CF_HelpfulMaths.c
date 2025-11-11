@@ -1,35 +1,26 @@
-#include <stdio.h>                      //339A
-#include<string.h>
+#include <stdio.h>
+#include <string.h>
 
-int main(){
-    char st[101];
-    int a=0,b=0,c=0,i;
-    scanf("%s", st);
-    for ( i = 0; i < 101; i+=2)
-    {
-        if(st[i]=='1')
-            a++;
-        else if(st[i]=='2')
-            b++;
-        else if(st[i]=='3')
-            c++;
+int main() {
+    char s[101];
+    int count[4] = {0}; 
+    scanf("%s", s);
+    int l = strlen(s);
+
+    for (int i = 0; i < l; i++) {
+        if (s[i] == '1') count[1]++;
+        else if (s[i] == '2') count[2]++;
+        else if (s[i] == '3') count[3]++;
     }
-    for ( i = 0; i < a; i++)
-    {
-        printf("1");
-        printf("+");
+
+    int a = 1;
+    for (int i = 1; i <= 3; i++) {
+        for (int j = 0; j < count[i]; j++) {
+            if (!a) printf("+");
+            printf("%d", i);
+            a = 0;
+        }
     }
-    for ( i = 0; i < b; i++)
-    {
-        printf("2");
-        printf("+");
-    }
-    for ( i = 0; i < c; i++)
-    {
-        printf("3");
-        if(i!=(c-1))
-        printf("+");
-    }
-    
+
     return 0;
 }
