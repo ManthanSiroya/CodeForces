@@ -1,54 +1,42 @@
-#include <iostream>
-#include <vector>
- 
+#include <bits/stdc++.h> //Problem-
 using namespace std;
+#define ll long long
  
-int main() {
-    int t;
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+ 
+    ll t;
     cin >> t;
- 
-    while (t--) {
-        int n, m;
+    while (t--)
+    {
+        ll n, m, i, ans = 0;
         cin >> n >> m;
- 
-        vector<long long> cnt(m, 0);
- 
-        for (int i = 0; i < n; i++) {
-            long long x;
-            cin >> x;
-            cnt[x % m]++;
+        vector<ll> v(n);
+        map<ll, ll> freq;
+        for (i = 0; i < n; i++)
+        {
+            cin >> v[i];
+            freq[(v[i] % m)]++;
         }
- 
-        long long ans = 0;
- 
-        if (cnt[0] > 0) {
-            ans++;
-        }
- 
-        for (int r = 1; r <= (m - 1) / 2; r++) {
-            long long a = cnt[r];
-            long long b = cnt[m - r];
- 
-            if (a == 0 && b == 0) {
-                continue;
+        for (i = 1; i <= m / 2; i++)
+        {
+            if (freq[i] > 0 && freq[m - i] > 0)
+            {
+                ll x = min(freq[i], freq[m - i]);
+                freq[i] -= x;
+                freq[m - i] -= x;
+                ll y = max(freq[i], freq[m - i]);
+                ans++;
+                if (y > 1)
+                    ans += y - 1;
             }
- 
-            long long mn = min(a, b);
-            long long mx = max(a, b);
- 
-            ans++;
- 
-            if (mx > mn) {
-                ans += mx - mn - 1;
-            }
+            else if (freq[i] > 0 || freq[m - i] > 0)
+                ans += max(freq[i], freq[m - i]);
         }
- 
-        if (m % 2 == 0 && cnt[m / 2] > 0) {
-            ans++;
-        }
- 
+        ans += (freq[0] > 0);
         cout << ans << endl;
     }
- 
     return 0;
 }
