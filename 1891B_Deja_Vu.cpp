@@ -1,4 +1,5 @@
 // Winners never Quit!
+// This code is more optimised then the correct actual code given in CP 31 sheet I think. But the actual code is much easier then I thought.
 #include <bits/stdc++.h> // Problem - 
 using namespace std;
  
