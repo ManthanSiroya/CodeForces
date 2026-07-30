@@ -1,88 +1,51 @@
-// Winners never Quit!
-// This code is more optimised then the correct actual code given in CP 31 sheet I think. But the actual code is much easier then I thought.
-#include <bits/stdc++.h> // Problem - 
+#include <bits/stdc++.h>
 using namespace std;
- 
 #define ll long long
-#define pr pair<ll, ll>
-#define pb push_back
-#define ran(a) a.begin(), a.end()
-#define fr(i, a, n) for (ll i = a; i < n; i++)
-#define frr(i, a, n) for (ll i = n - 1; i >= a; i--)
-#define elif else if
  
-bool isprime(ll n)
-{
-    if (n < 2) return false;
-    for (ll i = 2; i * i <= n; i++)
-        if (n % i == 0) return false;
-    return true;
-}
+int main() {
+	#ifndef ONLINE_JUDGE
+		freopen("Error.txt", "w", stderr);
+	#endif
  
-ll power(ll a, ll b) // O(log(b))
-{ 
-    ll res = 1;
-    while (b)
-    {
-        if (b & 1) res *= a;
-        a *= a;
-        b >>= 1;
-    }
-    return res;
-}
+	int t;
+	cin >> t; // Read the number of test cases
  
-void solve()
-{
-    ll n,q;
-    cin>>n>>q;
-    vector<ll> a(n),b(q);
-    vector<pair<ll,ll>> ans;
-    fr(i,0,n) cin>>a[i];
-    fr(i,0,q) cin>>b[i];
-    ll mx=0,x=0;
-    fr(i,1,30){
-        fr(j,0,n){
-            if(a[j]%(power(2,i))==0){
-                mx=i;
-                break;
-            }
-            if(j==n-1) {
-                x=1;
-                break;
-            }
-        }
-        if(x) break;
-    }
-    ll y=0;
-    fr(i,0,q){
-        if(b[i]>mx) continue;
-        elif(b[i]<mx){
-            y=0;
-            mx=b[i];
-        }
-        if(!y) {
-            ans.pb({mx,0}); y=1;
-        } 
-    }
-    if (ans.size()>0) ans[(ans.size()-1)].second=power(2,ans[(ans.size()-1)].first-1);
-    frr(i,0,(ans.size()-1)){
-        (ans[i].second)=(ans[i+1].second)+power(2,(ans[i].first)-1);
-    }
-    fr(i,0,n){
-        for(auto p:ans){
-            if(a[i]%(power(2,p.first))==0) a[i]+=p.second;
-        }
-    }
-    fr(i,0,n) cout<<a[i]<<" ";
-    cout << endl;
-}
+	while (t--) {
+		ll n, q;
+		cin >> n >> q; // Read the length of array 'a' and the number of queries
  
-int main()
-{
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL); cout.tie(NULL);
-    ll T; cin >> T;
-    while (T--)
-    solve();
-    return 0;
+		vector<ll> a(n); // Initialize vector 'a' of size 'n'
+		for (int i = 0; i < n; i++) { // Loop to read elements of array 'a'
+			cin >> a[i];
+		}
+ 
+		vector<ll> x(q); // Initialize vector 'x' of size 'q'
+		for (int i = 0; i < q; i++) { // Loop to read elements of array 'x'
+			cin >> x[i];
+		}
+ 
+		ll prev = 31; // Initialize 'prev' to 31, which is greater than any possible x[i]
+ 
+		for (int i = 0; i < q; i++) { // Loop through each query
+			if (x[i] >= prev) continue; // Skip if current x[i] is not less than 'prev'
+ 
+			ll val = pow(2, x[i]); // Calculate 2^x[i]
+ 
+			for (int j = 0; j < n; j++) { // Loop through each element of array 'a'
+				if (a[j] % val == 0) { // Check if a[j] is divisible by 2^x[i]
+					a[j] += (val / 2); // Add (2^x[i] / 2) to a[j]
+				}
+			}
+ 
+			prev = x[i]; // Update 'prev' to current x[i]
+		}
+ 
+		for (int i = 0; i < n; i++) { // Output the modified array 'a'
+			cout << a[i] << " ";
+		}
+		cout << endl;
+	}
+ 
+	// Time Complexity (TC): O(q + n * 30)
+	// Space Complexity (SC): O(q + n)
 }
