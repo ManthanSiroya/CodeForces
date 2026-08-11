@@ -1,34 +1,61 @@
-#include <bits/stdc++.h>
+// Winners never Quit!
+#include <bits/stdc++.h> // Problem - 
 using namespace std;
  
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+#define ll long long
+#define pr pair<ll, ll>
+#define pb push_back
+#define ran(a) a.begin(), a.end()
+#define fr(i, a, n) for (ll i = a; i < n; i++)
+#define frr(i, a, n) for (ll i = n - 1; i >= a; i--)
+#define elif else if
  
-    int t;
-    cin >> t;
+bool isprime(ll n)
+{
+    if (n < 2) return false;
+    for (ll i = 2; i * i <= n; i++)
+        if (n % i == 0) return false;
+    return true;
+}
  
-    while (t--) {
-        int n;
-        cin >> n;
- 
-        // n = 1: no l < r exists
-        if (n == 1) {
-            cout << 1 << '\n';
-        }
-        // Odd n > 1: impossible
-        else if (n % 2 == 1) {
-            cout << -1 << '\n';
-        }
-        // Even n: swap adjacent elements
-        else {
-            for (int i = 1; i <= n; i += 2) {
-                cout << i + 1 << ' ' << i;
-                if (i + 1 < n) cout << ' ';
-            }
-            cout << '\n';
-        }
+ll pow(ll a, ll b) // O(log(b))
+{ 
+    ll res = 1;
+    while (b)
+    {
+        if (b & 1) res *= a;
+        a *= a;
+        b >>= 1;
     }
+    return res;
+}
  
+//1 2 3 4
+ 
+void solve()
+{
+    ll n;
+    cin>>n;
+    if(n==1) {
+        cout<<"1\n";
+        return;
+    }
+    if(((n*(n+1))/2)%n==0){
+        cout<<"-1\n";
+        return;
+    }
+    for(ll i=1;i<n;i+=2){
+        cout<<i+1<<" "<<i<<" ";
+    }
+    cout<<endl;
+}
+ 
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+    ll T; cin >> T;
+    while (T--)
+    solve();
     return 0;
 }
